@@ -17,6 +17,7 @@ class VersionPlugin(Plugin):  # type: ignore
         if poetry_version_config is None:
             return
         version_source = poetry_version_config.get("source")
+        fallback = poetry_version_config.get("fallback")
         if not version_source:
             message = (
                 "<b>poetry-version-plugin</b>: No <b>source</b> configuration found in "
@@ -96,6 +97,14 @@ class VersionPlugin(Plugin):  # type: ignore
                     f"dynamic version to: {tag}"
                 )
                 poetry.package._set_version(tag)
+                return
+            elif fallback:
+                tag = "-.-.-"
+                poetry.package._set_version(tag)
+                io.write_line(
+                    "<b>poetry-version-plugin</b>: Git tag not found,"
+                    f"but fallback enabled. Testing tag: {tag}"
+                )
                 return
             else:
                 message = (
