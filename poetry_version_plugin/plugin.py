@@ -99,7 +99,7 @@ class VersionPlugin(Plugin):  # type: ignore
                 poetry.package._set_version(tag)
                 return
             elif fallback:
-                tag = "-.-.-"
+                tag = "9.9.9"
                 poetry.package._set_version(tag)
                 io.write_line(
                     "<b>poetry-version-plugin</b>: Git tag not found,"
